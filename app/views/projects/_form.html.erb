@@ -1,5 +1,24 @@
 <%= simple_form_for @project, wrapper: :horizontal_form do |f| %>
   <%= f.input :name %>
   <%= f.input :description %>
+
+  <h3>Tasks</h3>
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+    <th>Description</th>
+    <th>Done</th>
+    <th></th>
+    </thead>
+    <tbody>
+    <%= f.simple_fields_for :tasks do |task| %>
+    <%= render 'task_fields', f: task %>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div>
+    <%= link_to_add_association 'add task', f, :tasks, { 'data-association-insertion-node': 'tbody' } %>
+  </div>
+
   <%= f.button :submit, class: 'btn btn-primary' %>
 <% end %>
